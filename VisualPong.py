@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from proyecto1_modificando import getContours
+from getContours import getContours
 import pygame,cv2,random
 
 RED =(0,0,255)
