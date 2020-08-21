@@ -5,7 +5,12 @@ from getContours import getContours
 import pygame,cv2,random
 
 
-def pongGame(frameWidth,frameHeight,screen):
+
+    
+    
+
+
+def pongGame(frameWidth,frameHeight,screen,speed):
     RED =(0,0,255)
     BLUE =(255,0,0)
     PINK=(255,105,180)
@@ -30,6 +35,11 @@ def pongGame(frameWidth,frameHeight,screen):
     goals_L=0
     goals_R=0
     
+    font = pygame.font.Font(None, 60)
+    text = font.render(f"{goals_L}-{goals_R}", True, (0,0,0))
+    text_rect = text.get_rect(center=(frameWidth//2, frameHeight//2))
+    
+
     ###Parametros de las mascaras
     
     h_min_pink=162
@@ -57,12 +67,13 @@ def pongGame(frameWidth,frameHeight,screen):
     clock = pygame.time.Clock()
     
     if random.random()>0.5:
-        speed_x-=9
-        speed_y-=9
+        speed_x-=speed
+        speed_y-=speed
     else:
-        speed_x+=9
-        speed_y+=9
+        speed_x+=speed
+        speed_y+=speed
     
+ 
     
     while True:
          _, img = cap.read() 
@@ -85,6 +96,26 @@ def pongGame(frameWidth,frameHeight,screen):
          lower_green = np.array([h_min_green, s_min_green, v_min_green])
          upper_green = np.array([h_max_green, s_max_green, v_max_green])
          mask_green = cv2.inRange(imgHsv, lower_green, upper_green)
+         
+         
+         for event in pygame.event.get():
+             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                     goals_L=0
+                     goals_R=0
+                     x_ball=frameWidth//2
+                     y_ball=frameHeight//2
+                     speed_x *= -1
+                     speed_y *= -1
+         
+         
+         
+         
+         
+         
+         
+         
+         
          
          #si hay deteccion, actualizamos posicion
          _, y_pink_T=getContours(mask_pink)
@@ -128,12 +159,20 @@ def pongGame(frameWidth,frameHeight,screen):
          
          green_rect= pygame.draw.rect(screen,GREEN,(x_green,y_green,rect_width,rect_height))
         
-         ball= pygame.draw.circle(screen,BLUE,(x_ball,y_ball),8)
+         #ball= pygame.draw.circle(screen,BLUE,(x_ball,y_ball),8)
+         ball= pygame.draw.rect(screen,RED,(x_ball,y_ball,14,14))
         
         #colision
          if ball.colliderect(pink_rect) or ball.colliderect(green_rect):
             speed_x*=-1
             
+            
+         #show the result   
+         text = font.render(f"{goals_L}-{goals_R}", True, (0,0,0))
+         screen.blit(text, text_rect)
+         
+         
+         
          print((goals_R,goals_L))
          pygame.display.flip()
          clock.tick(60)
@@ -141,4 +180,4 @@ def pongGame(frameWidth,frameHeight,screen):
     pygame.quit()
 
 if __name__ == '__main__':
-    pongGame(640,480)
+    print("Execute from menu pls")
