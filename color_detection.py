@@ -1,3 +1,7 @@
+# Resource obtained from https://github.com/murtazahassan
+# It allows us to obtain parameters to detect an object
+
+
 import cv2
 import numpy as np
 from proyecto1_modificando import getContours
@@ -11,6 +15,8 @@ cap.set(3, frameWidth)
 cap.set(4, frameHeight)
 frameCounter = 0
   
+
+
 def empty(a):
     pass
   

@@ -4,58 +4,56 @@ import numpy as np
 from getContours import getContours
 import pygame,cv2,random
 
-RED =(0,0,255)
-BLUE =(255,0,0)
-PINK=(255,105,180)
-GREEN=(50,205,50)
 
-
-frameWidth = 640
-frameHeight = 480
-
-rect_width=10
-rect_height=50
-
-x_pink=frameWidth//8
-x_green=frameWidth-x_pink
-
-y_pink= frameWidth//2
-y_green= frameHeight//2
-
-x_ball=frameWidth//2
-y_ball=frameHeight//2
-
-speed_x=0
-speed_y=0
-
-goals_L=0
-goals_R=0
-
-###Parametros de las mascaras
-
-h_min_pink=162
-h_max_pink=179
-s_min_pink=98
-s_max_pink=255
-v_min_pink=188
-v_max_pink=255
-
-h_min_green=41
-h_max_green=67
-s_min_green=88
-s_max_green=255
-v_min_green=0
-v_max_green=255
-
-
-if __name__ == '__main__':
+def pongGame(frameWidth,frameHeight,screen):
+    RED =(0,0,255)
+    BLUE =(255,0,0)
+    PINK=(255,105,180)
+    GREEN=(50,205,50)
+   
+    
+    rect_width=10
+    rect_height=50
+    
+    x_pink=frameWidth//8
+    x_green=frameWidth-x_pink
+    
+    y_pink= frameWidth//2
+    y_green= frameHeight//2
+    
+    x_ball=frameWidth//2
+    y_ball=frameHeight//2
+    
+    speed_x=0
+    speed_y=0
+    
+    goals_L=0
+    goals_R=0
+    
+    ###Parametros de las mascaras
+    
+    h_min_pink=162
+    h_max_pink=179
+    s_min_pink=98
+    s_max_pink=255
+    v_min_pink=188
+    v_max_pink=255
+    
+    h_min_green=41
+    h_max_green=67
+    s_min_green=88
+    s_max_green=255
+    v_min_green=0
+    v_max_green=255
+    
+    
     cap = cv2.VideoCapture(0)
     cap.set(3, frameWidth)
     cap.set(4, frameHeight)
     
     
-    pygame.init()
-    screen = pygame.display.set_mode((frameWidth,frameHeight))
+    #pygame.init()
+    #screen = pygame.display.set_mode((frameWidth,frameHeight))
     clock = pygame.time.Clock()
     
     if random.random()>0.5:
@@ -112,8 +110,8 @@ if __name__ == '__main__':
              y_ball=frameHeight//2
              speed_x *= -1
              speed_y *= -1
-
-	# Revisa si la pelota sale del lado izquierdo
+    
+    	# Revisa si la pelota sale del lado izquierdo
          if x_ball < 0:
              
              goals_R+=1
@@ -140,4 +138,7 @@ if __name__ == '__main__':
          pygame.display.flip()
          clock.tick(60)
          
-    pygame.quit()     
+    pygame.quit()
+
+if __name__ == '__main__':
+    pongGame(640,480)
